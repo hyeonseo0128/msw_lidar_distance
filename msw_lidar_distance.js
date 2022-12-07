@@ -41,7 +41,7 @@ try {
         name: 'lib_lidar_distance',
         target: 'armv6',
         description: "[name]",
-        scripts: './lib_skt_lte',
+        scripts: './lib_lidar_distance',
         data: ['Distance'],
         control: []
     };
