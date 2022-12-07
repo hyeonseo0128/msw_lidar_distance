@@ -60,34 +60,34 @@ let msw_sub_mobius_topic = [];
 
 // let msw_sub_lib_topic = [];
 
-// function init() {
-//     if (config.lib.length > 0) {
-//         for (let idx in config.lib) {
-//             if (config.lib.hasOwnProperty(idx)) {
-//                 if (msw_mqtt_client != null) {
-//                     for (let i = 0; i < config.lib[idx].control.length; i++) {
-//                         let sub_container_name = config.lib[idx].control[i];
-//                         let _topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + sub_container_name;
-//                         msw_mqtt_client.subscribe(_topic);
-//                         msw_sub_mobius_topic.push(_topic);
-//                         console.log('[msw_mqtt] msw_sub_mobius_topic[' + i + ']: ' + _topic);
-//                     }
+function init() {
+    if (config.lib.length > 0) {
+        for (let idx in config.lib) {
+            if (config.lib.hasOwnProperty(idx)) {
+                // if (msw_mqtt_client != null) {
+                //     for (let i = 0; i < config.lib[idx].control.length; i++) {
+                //         let sub_container_name = config.lib[idx].control[i];
+                //         let _topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + sub_container_name;
+                //         msw_mqtt_client.subscribe(_topic);
+                //         msw_sub_mobius_topic.push(_topic);
+                //         console.log('[msw_mqtt] msw_sub_mobius_topic[' + i + ']: ' + _topic);
+                //     }
 
-//                     for (let i = 0; i < config.lib[idx].data.length; i++) {
-//                         let container_name = config.lib[idx].data[i];
-//                         let _topic = '/MUV/data/' + config.lib[idx].name + '/' + container_name;
-//                         local_msw_mqtt_client.subscribe(_topic);
-//                         msw_sub_lib_topic.push(_topic);
-//                         console.log('[lib_mqtt] msw_sub_lib_topic[' + i + ']: ' + _topic);
-//                     }
-//                 }
+                //     for (let i = 0; i < config.lib[idx].data.length; i++) {
+                //         let container_name = config.lib[idx].data[i];
+                //         let _topic = '/MUV/data/' + config.lib[idx].name + '/' + container_name;
+                //         local_msw_mqtt_client.subscribe(_topic);
+                //         msw_sub_lib_topic.push(_topic);
+                //         console.log('[lib_mqtt] msw_sub_lib_topic[' + i + ']: ' + _topic);
+                //     }
+                // }
 
-//                 let obj_lib = config.lib[idx];
-//                 setTimeout(runLib, 1000 + parseInt(Math.random() * 10), JSON.parse(JSON.stringify(obj_lib)));
-//             }
-//         }
-//     }
-// }
+                let obj_lib = config.lib[idx];
+                setTimeout(runLib, 1000 + parseInt(Math.random() * 10), JSON.parse(JSON.stringify(obj_lib)));
+            }
+        }
+    }
+}
 
 function runLib(obj_lib) {
     try {
