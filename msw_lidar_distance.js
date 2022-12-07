@@ -259,7 +259,7 @@ function local_msw_mqtt_connect(broker_ip, port) {
             //         }
             //     }
             // }
-        });
+        //});
 
         local_msw_mqtt_client.on('error', function (err) {
             console.log(err.message);
