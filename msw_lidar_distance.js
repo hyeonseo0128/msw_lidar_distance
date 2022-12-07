@@ -232,25 +232,25 @@ function local_msw_mqtt_connect(broker_ip, port) {
 
         local_msw_mqtt_client = mqtt.connect(connectOptions);
 
-        local_msw_mqtt_client.on('connect', function () {
-            console.log('[local_msw_mqtt_connect] connected to ' + broker_ip);
-            for (let idx in msw_sub_fc_topic) {
-                if (msw_sub_fc_topic.hasOwnProperty(idx)) {
-                    local_msw_mqtt_client.subscribe(msw_sub_fc_topic[idx]);
-                    console.log('[local_msw_mqtt] msw_sub_fc_topic[' + idx + ']: ' + msw_sub_fc_topic[idx]);
-                }
-            }
-        });
+        // local_msw_mqtt_client.on('connect', function () {
+        //     console.log('[local_msw_mqtt_connect] connected to ' + broker_ip);
+        //     for (let idx in msw_sub_fc_topic) {
+        //         if (msw_sub_fc_topic.hasOwnProperty(idx)) {
+        //             local_msw_mqtt_client.subscribe(msw_sub_fc_topic[idx]);
+        //             console.log('[local_msw_mqtt] msw_sub_fc_topic[' + idx + ']: ' + msw_sub_fc_topic[idx]);
+        //         }
+        //     }
+        // });
 
-        local_msw_mqtt_client.on('message', function (topic, message) {
-            for (let idx in msw_sub_fc_topic) {
-                if (msw_sub_fc_topic.hasOwnProperty(idx)) {
-                    if (topic === msw_sub_fc_topic[idx]) {
-                        setTimeout(on_process_fc_data, parseInt(Math.random() * 5), topic, message.toString());
-                        break;
-                    }
-                }
-            }
+        // local_msw_mqtt_client.on('message', function (topic, message) {
+        //     for (let idx in msw_sub_fc_topic) {
+        //         if (msw_sub_fc_topic.hasOwnProperty(idx)) {
+        //             if (topic === msw_sub_fc_topic[idx]) {
+        //                 setTimeout(on_process_fc_data, parseInt(Math.random() * 5), topic, message.toString());
+        //                 break;
+        //             }
+        //         }
+        //     }
             // for (let idx in msw_sub_lib_topic) {
             //     if (msw_sub_lib_topic.hasOwnProperty(idx)) {
             //         if (topic === msw_sub_lib_topic[idx]) {
