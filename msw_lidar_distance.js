@@ -99,7 +99,7 @@ function runLib(obj_lib) {
 
         let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
 
-        run_lib.stdout.on('data', functㄴㄴㄴㄴion (data) {
+        run_lib.stdout.on('data', function (data) {
             console.log('stdout: ' + data);
         });
 
