@@ -99,7 +99,7 @@ function runLib(obj_lib) {
 
         let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
 
-        run_lib.stdout.on('data', function (data) {
+        run_lib.stdout.on('data', functㄴㄴㄴㄴion (data) {
             console.log('stdout: ' + data);
         });
 
@@ -283,7 +283,7 @@ function parseDataMission(topic, str_message) {
         let data_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + topic_arr[topic_arr.length - 1];
         // msw_mqtt_client.publish(data_topic + '/' + my_sortie_name, str_message);
         msw_mqtt_client.publish(data_topic, str_message);
-        // console.log('Distance => ' + str_message);
+        console.log('Distance => ' + str_message);
         sh_man.crtci(data_topic + '?rcn=0', 0, str_message, null, function (rsc, res_body, parent, socket) {
         });
     } catch (e) {
