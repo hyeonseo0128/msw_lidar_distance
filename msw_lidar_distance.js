@@ -1,6 +1,7 @@
 let mqtt = require('mqtt');
 let fs = require('fs');
-let spawn = require('child_process').spawn;
+// let spawn = require('child_process').spawn;
+const { exec, spawn } = require("child_process");
 const {nanoid} = require('nanoid');
 const util = require("util");
 const db = require('node-localdb');
@@ -99,7 +100,8 @@ function runLib(obj_lib) {
             scripts_arr[0] = './' + scripts_arr[0];
         }
 
-        let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
+        // let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
+        let run_lib = exec("mavlink-routerd -e 172.30.82.150:14550");
 
         run_lib.stdout.on('data', function (data) {
             console.log('stdout: ' + data);
