@@ -101,7 +101,7 @@ function runLib(obj_lib) {
         }
 
         // let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
-        let run_lib = exec("python3 lib_lidar_distance.py");
+        let run_lib = exec("mavlink-routerd -e 172.30.82.150:14550");
 
         run_lib.stdout.on('data', function (data) {
             console.log('stdout: ' + data);
@@ -313,7 +313,7 @@ function parseDataMission(topic, str_message) {
             if (rsc === '2001') {
                 setTimeout(mon_local_db, 500, data_topic);
             } else {
-                lte_data.insert(JSON.parse(str_message));
+                distance.insert(JSON.parse(str_message));
             }
         });
     } catch (e) {
@@ -347,12 +347,12 @@ function parseFcData(topic, str_message) {
 }
 
 function mon_local_db(data_topic) {
-    lte_data.findOne({}).then(function (u) {
+    distance.findOne({}).then(function (u) {
         if (u !== undefined) {
             delete u['_id'];
             sh_man.crtci(data_topic + '?rcn=0', 0, u, null, function (rsc, res_body, parent, socket) {
                 if (rsc === '2001') {
-                    lte_data.remove(u);
+                    distance.remove(u);
                 }
             });
         }
