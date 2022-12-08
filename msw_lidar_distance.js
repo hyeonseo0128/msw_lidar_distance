@@ -1,7 +1,7 @@
 let mqtt = require('mqtt');
 let fs = require('fs');
-// let spawn = require('child_process').spawn;
-const { exec, spawn } = require("child_process");
+let spawn = require('child_process').spawn;
+// const { exec, spawn } = require("child_process");
 const {nanoid} = require('nanoid');
 const util = require("util");
 const db = require('node-localdb');
@@ -14,7 +14,8 @@ let config = {};
 config.name = 'msw_lidar_distance';
 global.drone_info = '';
 
-let distance = db('./' + config.name + '_data' + '.json');
+// let distance = db('./' + config.name + '_data' + '.json');
+let distance = '';
 
 try {
     drone_info = JSON.parse(fs.readFileSync('../drone_info.json', 'utf8'));
@@ -100,8 +101,8 @@ function runLib(obj_lib) {
             scripts_arr[0] = './' + scripts_arr[0];
         }
 
-        // let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
-        let run_lib = exec("python3 lib_lidar_distance.py");
+        let run_lib = spawn(scripts_arr[0], scripts_arr.slice(1));
+        // let run_lib = exec("python3 lib_lidar_distance.py");
 
         run_lib.stdout.on('data', function (data) {
             console.log('stdout: ' + data);
@@ -309,12 +310,13 @@ function parseDataMission(topic, str_message) {
         let data_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + topic_arr[topic_arr.length - 1];
         // msw_mqtt_client.publish(data_topic + '/' + my_sortie_name, str_message);
         msw_mqtt_client.publish(data_topic, str_message);
+        console.log('Distance => ' + str_message);
         sh_man.crtci(data_topic + '?rcn=0', 0, str_message, null, function (rsc, res_body, parent, socket) {
-            if (rsc === '2001') {
-                setTimeout(mon_local_db, 500, data_topic);
-            } else {
-                distance.insert(JSON.parse(str_message));
-            }
+            // if (rsc === '2001') {
+            //     setTimeout(mon_local_db, 500, data_topic);
+            // } else {
+            //     distance.insert(JSON.parse(str_message));
+            // }
         });
     } catch (e) {
         console.log('[parseDataMission] data format of lib is not json');
@@ -346,15 +348,15 @@ function parseFcData(topic, str_message) {
     ///////////////////////////////////////////////////////////////////////
 }
 
-function mon_local_db(data_topic) {
-    distance.findOne({}).then(function (u) {
-        if (u !== undefined) {
-            delete u['_id'];
-            sh_man.crtci(data_topic + '?rcn=0', 0, u, null, function (rsc, res_body, parent, socket) {
-                if (rsc === '2001') {
-                    distance.remove(u);
-                }
-            });
-        }
-    });
-}
+// function mon_local_db(data_topic) {
+//     distance.findOne({}).then(function (u) {
+//         if (u !== undefined) {
+//             delete u['_id'];
+//             sh_man.crtci(data_topic + '?rcn=0', 0, u, null, function (rsc, res_body, parent, socket) {
+//                 if (rsc === '2001') {
+//                     distance.remove(u);
+//                 }
+//             });
+//         }
+//     });
+// }
